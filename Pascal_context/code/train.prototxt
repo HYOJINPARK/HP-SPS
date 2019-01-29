@@ -1,0 +1,804 @@
+## Pascal contexy data set Rand sp train
+## concatenate conv- 1,2,3,4,5,7   + sc => fully conv last layer
+## sc8(6) + org
+
+
+
+layer {
+  name: "data"
+  type: "Python"
+  top: "data"
+  top: "label"
+  top: "sp"
+  top: "N_sp"
+ 
+  python_param {
+    module: "PascalContext_layers"
+    layer: "PascalContextDataLayer"
+    param_str: "{\'tops\': [\'color\', \'label\', \'superpixel\' , \'N_pixel\' ], \'pascon_dir\': \'/media/hyojin/162E67592E673143/Code_room/DATA/VOC2010/VOC2010/Pascal_Context_448_59cls', \'seed\': 1337, \'split\': \'train\', \'batch\' :5}"
+  }
+}
+
+
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+ weight_filler     {    type: "xavier"  }
+    bias_filler	      {    type: "constant"    value: 0.1  }
+  }
+}
+
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2_re"
+}
+
+####
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2_re"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2_re"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2_re"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "conv3_2"
+  top: "conv3_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3_re"
+}
+
+####
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_3_re"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "conv4_3"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "conv4_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_3"
+  type: "ReLU"
+  bottom: "conv4_3"
+  top: "conv4_3_re"
+}
+
+##
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom: "conv4_3_re"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv5_1"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "conv5_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_1"
+  type: "ReLU"
+  bottom: "conv5_1"
+  top: "conv5_1"
+}
+
+layer {
+  name: "conv5_2"
+  type: "Convolution"
+  bottom: "conv5_1"
+  top: "conv5_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_2"
+  type: "ReLU"
+  bottom: "conv5_2"
+  top: "conv5_2"
+}
+
+layer {
+  name: "conv5_3"
+  type: "Convolution"
+  bottom: "conv5_2"
+  top: "conv5_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+
+################## pyramid pooling ########################
+
+layer {
+  bottom: "conv5_3"	    top: "conv5_3"
+  name: "relu5_3"	    type: "ReLU"
+}
+
+
+#-----------pool(2) K(3,1,1)
+
+layer {
+  name:	"pool5_pym1"		      type: "Pooling"
+  bottom: "conv5_3"	      top: "pool5_pym1"  
+  pooling_param { 
+	pool: MAX     kernel_size: 2    stride: 2  }
+}
+
+
+layer {
+  name: "conv6_pym1"	      type: "Convolution"
+  bottom: "pool5_pym1"	      top: "conv6_pym1" 
+  param {     lr_mult: 1     decay_mult: 1   }
+  param {    lr_mult: 2    decay_mult: 0  }
+  convolution_param {
+        kernel_size: 3		pad:1	        num_output: 1024  
+	weight_filler     {    type: "xavier"  }
+	bias_filler	      {    type: "constant"    value: 0.1  }}
+}
+
+layer {
+   name: "relu_pym1"	      type: "ReLU"
+   bottom: "conv6_pym1"	      top: "conv6_pym1" 
+}
+
+layer {
+  name:	"drop6_pym1"		 type: "Dropout"
+  bottom: "conv6_pym1"		 top: "conv6_pym1"
+  dropout_param	{     dropout_ratio: 0.5  }
+}
+
+#-----------pool(4) K(3,1,1)
+
+layer {
+  name:	"pool5_pym2"	      type: "Pooling"
+  bottom: "conv5_3"	      top: "pool5_pym2"  
+  pooling_param { 
+	pool: MAX     kernel_size: 4    stride: 4  }
+}
+
+
+layer {
+  name: "conv6_pym2"	      type: "Convolution"
+  bottom: "pool5_pym2"	      top: "conv6_pym2" 
+  param {     lr_mult: 1     decay_mult: 1   }
+  param {    lr_mult: 2    decay_mult: 0  }
+  convolution_param {
+        kernel_size: 3		pad:1	        num_output: 1024 
+	weight_filler     {    type: "xavier"  }
+	bias_filler	      {    type: "constant"    value: 0.1  }}
+}
+
+layer {
+   name: "relu_pym2"	      type: "ReLU"
+   bottom: "conv6_pym2"	      top: "conv6_pym2" 
+}
+
+layer {
+  name:	"drop6_pym2"		 type: "Dropout"
+  bottom: "conv6_pym2"		 top: "conv6_pym2"
+  dropout_param	{     dropout_ratio: 0.5  }
+}
+
+#-----------pool(7) K(3,1,1)
+
+layer {
+  name:	"pool5_pym3"	      type: "Pooling"
+  bottom: "conv5_3"	      top: "pool5_pym3"  
+  pooling_param { 
+	pool: MAX     kernel_size: 7    stride:	7    }
+}
+
+
+layer {
+  name: "conv6_pym3"	      type: "Convolution"
+  bottom: "pool5_pym3"	      top: "conv6_pym3" 
+  param {     lr_mult: 1     decay_mult: 1   }
+  param {    lr_mult: 2    decay_mult: 0  }
+  convolution_param {
+         kernel_size: 3		pad:1	        num_output: 1024 
+	weight_filler     {    type: "xavier"  }
+	bias_filler	      {    type: "constant"    value: 0.1  }}
+}
+
+layer {
+   name: "relu_pym3"	      type: "ReLU"
+   bottom: "conv6_pym3"	      top: "conv6_pym3" 
+}
+
+layer {
+  name:	"drop6_pym3"		 type: "Dropout"
+  bottom: "conv6_pym3"		 top: "conv6_pym3"
+  dropout_param	{     dropout_ratio: 0.5  }
+}
+
+
+#-----------pool(14) K(3,1,1)
+
+layer {
+  name:	"pool5_pym4"	      type: "Pooling"
+  bottom: "conv5_3"	      top: "pool5_pym4"  
+  pooling_param { 
+	pool: MAX     kernel_size: 14    stride: 14  }
+}
+
+
+layer {
+  name: "conv6_pym4"	      type: "Convolution"
+  bottom: "pool5_pym4"	      top: "conv6_pym4" 
+  param {     lr_mult: 1     decay_mult: 1   }
+  param {    lr_mult: 2    decay_mult: 0  }
+  convolution_param {
+	kernel_size: 3		  pad:1     num_output: 1024
+	weight_filler     {    type: "xavier"  }
+	bias_filler	      {    type: "constant"    value: 0.1  }}
+}
+
+layer {
+   name: "relu_pym4"	      type: "ReLU"
+   bottom: "conv6_pym4"	      top: "conv6_pym4" 
+}
+
+layer {
+  name:	"drop6_pym4"		 type: "Dropout"
+  bottom: "conv6_pym4"		 top: "conv6_pym4"
+  dropout_param	{     dropout_ratio: 0.5  }
+}
+
+
+####### normalization #####################
+
+
+
+layer {
+  name: "conv3_norm"
+  type: "Normalize"
+  bottom: "conv3_3"
+  top: "conv3_3_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+layer {
+  name: "conv4_norm"
+  type: "Normalize"
+  bottom: "conv4_3"
+  top: "conv4_3_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+layer {
+  name: "conv5_norm"
+  type: "Normalize"
+  bottom: "conv5_3"
+  top: "conv5_3_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+
+layer {
+  name: "conv6_pym1_norm"
+  type: "Normalize"
+  bottom: "conv6_pym1"
+  top: "conv6_pym1_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+
+layer {
+  name: "conv6_pym2_norm"
+  type: "Normalize"
+  bottom: "conv6_pym2"
+  top: "conv6_pym2_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+
+
+layer {
+  name: "conv6_pym3_norm"
+  type: "Normalize"
+  bottom: "conv6_pym3"
+  top: "conv6_pym3_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+layer {
+  name: "conv6_pym4_norm"
+  type: "Normalize"
+  bottom: "conv6_pym4"
+  top: "conv6_pym4_norm"
+  norm_param {
+    scale_filler {
+      type: "constant"
+      value: 10
+    }
+    across_spatial: false
+    channel_shared: false
+    fix_scale: false
+  }
+}
+
+
+
+####### make sampling layer #################
+
+
+layer {
+  name: "rand_coord"	    type: "Python"  
+  bottom : "sp"		    bottom : "N_sp"
+  top: "rand_coord"
+  
+ 
+  python_param {
+    module: "Make_Randsp"	    layer: "RandSPSamplingLayer"
+    param_str: "{\'N_sample\': 250, \'if_rand\': \'True\'}"
+  }
+}
+
+layer {
+    name: "rand_sp_conv"
+    type: "RandSPConv"
+  
+    bottom: "conv3_3_norm"
+    bottom: "conv4_3_norm"
+    bottom: "conv5_3_norm"
+    bottom: "conv6_pym1_norm"
+    bottom: "conv6_pym2_norm"
+    bottom: "conv6_pym3_norm"
+    bottom: "conv6_pym4_norm"
+    bottom: "rand_coord"
+    bottom: "label"
+    
+    top: "fc5"
+    top: "sampling_label"
+    rand_sp_conv_param{
+	f_width : 448
+	f_height : 448
+        num_output: 250
+        rand_selection: true
+	pooling_factor: 4
+	pooling_factor: 8
+	pooling_factor: 16
+	pooling_factor: 32
+	pooling_factor: 64
+	pooling_factor: 112
+	pooling_factor: 224
+	
+    }
+}
+
+
+## -- train fully connected layer on top of it --
+layer {
+  name: "Reshape_data"       type: "Python"
+  bottom: "fc5"		     bottom: "sampling_label"     
+  top: "re_fc5"		     top: "re_sampling_label"
+
+  propagate_down: 1	     propagate_down: 0	
+  python_param {
+    module: "Reshape_layer"       layer: "ReshapeDataLayer"
+    param_str: "{ \'N_sample\' :250}"
+  }
+}
+
+layer {
+  name: "reshape"	    type: "Reshape"
+  bottom: "re_fc5"	    top: "re2_fc5"
+  
+  reshape_param {
+    shape {      dim :0      dim :0      dim :0      dim :-1      }
+    }
+  }
+
+
+####################total labeling ###############################
+
+
+layer {
+  name:	"fc6"		  type: "Convolution"
+  bottom: "re2_fc5"	  top: "fc6"
+  param  {    lr_mult: 15	decay_mult: 1  }
+  param	 {    lr_mult: 25	decay_mult: 0  }
+  
+  convolution_param {
+    num_output:	4096      pad: 0     kernel_size: 1      stride: 1    
+    weight_filler     {    type: "xavier"   }
+    bias_filler   {     type: "constant"    value: 0.1  }  }
+}
+
+layer {
+  name: "relu_fc6"      type: "ReLU"
+  bottom: "fc6"	        top: "fc6"
+}
+
+layer {
+  name: "drop_fc6"    type: "Dropout"
+  bottom: "fc6"	      top: "fc6"
+  dropout_param {    dropout_ratio: 0.5  }
+}
+
+layer {
+  name:	"fc7"	    type: "Convolution"
+  bottom: "fc6"	    top: "fc7"
+  param   {    lr_mult: 3     decay_mult: 1  }
+  param   {    lr_mult: 5     decay_mult: 0  }
+  
+  convolution_param {
+    num_output:	4096      pad: 0    kernel_size: 1    stride: 1
+    weight_filler     {    type: "xavier"   }
+    bias_filler	      {    type: "constant"    value: 0.1  }  }
+}
+
+
+
+#########################score#######################################
+
+layer {
+  name: "score_pascon"		  type: "Convolution"
+  bottom: "fc7"		  top: "score_pascon"
+  param   {    lr_mult: 15   decay_mult: 1  }  
+  param	  {    lr_mult: 25   decay_mult: 0  }
+  
+  convolution_param
+  {    num_output: 60    pad: 0    kernel_size: 1    stride: 1    
+       weight_filler     {    type: "xavier"  }
+       bias_filler	 {    type: "constant"    value: 0.1  }  }
+}
+
+
+
+layer {
+  name: "loss_pascon"	      type: "SoftmaxWithLoss"
+  bottom: "score_pascon"      bottom: "re_sampling_label"
+    
+  propagate_down: 1     propagate_down: 0
+
+  top: "loss_pascon"
+  loss_param {    #ignore_label: 254    
+  normalize: false  }
+}
+
+
