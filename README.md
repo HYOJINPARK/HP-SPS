@@ -3,7 +3,7 @@
 # Superpixel-based Semantic Segmentation Trained by Statistical Process Control
 
 This is a caffe implementation of the paper [Superpixel-based Semantic Segmentation Trained by Statistical Process Control](https://arxiv.org/abs/1706.10071)
-![model_Arch](img/model_arch.png)
+![model_Arch](img/model_arch.PNG)
 
 
 ## Additional Datasets
@@ -14,9 +14,9 @@ download [here](https://drive.google.com/drive/folders/15mO0DYjRBPoOG3QdeONV8tvH
 install caffe and run solve.py
 
 ## result
-![ex1_img](img/ex1_img.png) ![ex1_gt](img/ex1_gt.jpg) ![ex1_est](img/ex1_result.png) 
+![ex1_img](img/ex1_img.PNG) ![ex1_gt](img/ex1_gt.jpg) ![ex1_est](img/ex1_result.PNG) 
 
-![ex1_img](img/ex2_img.png) ![ex1_gt](img/ex2_gt.png) ![ex1_est](img/ex2_result.png)
+![ex1_img](img/ex2_img.PNG) ![ex1_gt](img/ex2_gt.PNG) ![ex1_est](img/ex2_result.PNG)
 
 
 
