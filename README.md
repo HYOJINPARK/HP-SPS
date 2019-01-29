@@ -8,10 +8,10 @@ This is a caffe implementation of the paper [Superpixel-based Semantic Segmentat
 
 ## Additional Datasets
 Please download superpixel result of Pascal Context or use Matlab 
-download [here](https://drive.google.com/drive/folders/15mO0DYjRBPoOG3QdeONV8tvH2BpWVswj?usp=sharing)
+download [here](https://drive.google.com/file/d/1P2qUPGpwe6iCDAJxV7ltU3glh16u_Q_v/view?usp=sharing)
 
 ## Run Model
-install caffe and run solve.py
+install caffe from [here](https://drive.google.com/file/d/1-FcQjq3TqP6Gtie5w36NPkpOobO98xtT/view?usp=sharing) and run solve.py
 
 ## result
 ![ex1_img](img/ex1_img.PNG) ![ex1_gt](img/ex1_gt.jpg) ![ex1_est](img/ex1_result.PNG) 
